@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.springframework.org/security/tags">
+<head>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+        <a class="navbar-brand" th:href="@{/}">Hotel Booking</a>
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/rooms/list}">Rooms</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link "th:href="@{/bookings/list}">Bookings</a>
+            </li>
+        </ul>
+
+        <div class="nav navbar-nav navbar-right">
+            <div class="col">
+                <p sec:authentication="name" class="text-white"></p>
+            </div>
+            <form action="#" th:action="@{/logout}" method="POST">
+                <input type="submit" value="Logout"/>
+            </form>
+        </div>
+    </div>
+</nav>
+<body>
+
+
+<br>
+<div class="container ">
+    <div class="container d-flex content-justify-center">
+        <h2>Room Details</h2>
+    </div>
+    <form action="#" th:action="@{/rooms/save}" th:object="${room}" method="POST">
+        <input type="hidden"  th:field="*{id}"/>
+
+        <div class="form-group">
+            <label class="label">Room Number</label>
+            <input th:disabled="${room.id!=0}" class="form-control mb-4 col-4" type="text" th:field="*{roomNo}" placeholder="Room Number" />
+            <small style="color:red"  th:if="${#fields.hasErrors('roomNo')}" th:errors="*{roomNo}"></small>
+        </div>
+        <div class="form-group">
+            <label class="label">Adults Capacity</label>
+            <input  class="form-control mb-4 col-4" type="text" th:field="*{adultCapacity}" placeholder="Adults Capacity" />
+            <small style="color:red"  th:if="${#fields.hasErrors('adultCapacity')}" th:errors="*{adultCapacity}"></small>
+        </div>
+        <div class="form-group">
+            <label class="label">Children Capacity</label>
+            <input class="form-control mb-4 col-4" type="text" th:field="*{childrenCapacity}" placeholder="Children's Capacity" />
+            <small style="color:red"  th:if="${#fields.hasErrors('childrenCapacity')}" th:errors="*{childrenCapacity}"></small>
+         </div>
+        <div class="form-group">
+            <label class="label">Price</label>
+            <input class="form-control mb-4 col-4" type="text" th:field="*{price}" placeholder="price" value=""/>
+            <small style="color:red"  th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></small>
+         </div>
+        <div class="form-group">
+            <small style="color:red"  th:if="${#fields.hasErrors('global')}" th:errors="*{global}"></small>
+            <button  type="submit" class="btn btn-info col-2">Save</button>
+         </div>
+    </form>
+    <hr>
+    <a th:href="@{/rooms/list}">Back to Rooms</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.springframework.org/security/tags">
+<head>
+    <title>
+        Rooms
+    </title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+        <a class="navbar-brand" th:href="@{/}">Hotel Booking</a>
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/rooms/list}">Rooms</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link "th:href="@{/bookings/list}">Bookings</a>
+            </li>
+        </ul>
+
+
+        <div class="nav navbar-nav navbar-right">
+            <div class="col">
+                <p sec:authentication="name" class="text-white"></p>
+            </div>
+            <form action="#" th:action="@{/logout}" method="POST">
+                <input type="submit" value="Logout"/>
+            </form>
+        </div>
+    </div>
+</nav>
+<body>
+<div class="container">
+    <hr>
+     <div class="row d-flex justify-content-center" >
+        <div class="col-6 bg-light">
+            <div class="row">
+                <h1>  <i class="fa fa-sign-in" style="font-size:48px" ></i>Check-IN</h1>
+            </div>
+            <hr>
+            <div class="row">
+
+                <ul class="list-group list-group-flush bg-light">
+                    <li class="list-group-item bg-light"th:each="booking : ${checkIns}">
+                        <div class="row">
+                            <div class="flex-column col-7">
+                                <p class="font-weight-bold" th:text="${booking.firstName}+' '+${booking.lastName}"></p>
+                                <span>Room Number <span class="font-weight-bold" th:text="${booking.roomNo}"></span></span>
+                            </div>
+                            <div class="flex-column col-5">
+                                <span><a th:href="@{/checkIn(bookingId=${booking.id})}" class="btn btn-warning">CheckIn</a></span>
+
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-6 bg-light">
+           <div class="row">
+               <h1><i class="fa fa-sign-out" style="font-size:48px" ></i>Check-OUT</h1>
+           </div>
+            <hr>
+            <div class="row">
+                <ul class="list-group list-group-flush bg-light">
+                    <li class="list-group-item bg-light"th:each="booking : ${checkOuts}">
+                       <div class="row">
+                           <div class="flex-column col-6">
+                                <p class="font-weight-bold" th:text="${booking.firstName}+' '+${booking.lastName}"></p>
+                               <span>Room Number <span  class="font-weight-bold" th:text="${booking.roomNo}"></span></span>
+                              <span> Price <span class="font-weight-bold" th:text="${booking.price}"></span></span>
+                           </div>
+                           <div class="flex-column col-6">
+                               <span><a th:href="@{/checkOut(bookingId=${booking.id})}" class="btn btn-warning">CheckOut</a></span>
+
+                           </div>
+                       </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+</body>
+</html>
+<!--
+ <div class="col-6">
+                           <div class="row">
+                               <p th:text="${booking.firstName}+' '+${booking.lastName}"></p>
+                           </div>
+                            <div class="row">
+                                <span>Room Number <span th:text="${booking.roomNo}"></span></span>
+                            </div>
+                            <div class="row">
+                                Price    <p th:text="${booking.price}"></p>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <span><a th:href="@{/checkOut(bookingId=${booking.id})}" class="btn btn-warning">CheckIn</a></span>
+
+                        </div>
+-->

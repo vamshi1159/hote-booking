@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.springframework.org/security/tags">
+<head>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+        <a class="navbar-brand" th:href="@{/}">Hotel Booking</a>
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/rooms/list}">Rooms</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link "th:href="@{/bookings/list}">Bookings</a>
+            </li>
+        </ul>
+        <div class="nav navbar-nav navbar-right">
+            <div class="col">
+                <p sec:authentication="name" class="text-white"></p>
+            </div>
+            <form action="#" th:action="@{/logout}" method="POST">
+                <input type="submit" value="Logout"/>
+            </form>
+        </div>
+    </div>
+</nav>
+<body>
+
+
+
+<div class="container ">
+    <div class="container d-flex content-justify-center">
+        <h2>Booking Details</h2>
+    </div>
+    <form action="#" th:action="@{/bookings/availability}" th:object="${booking}" method="POST">
+        
+        <input type="hidden"  th:field="*{id}"/>
+        
+        <div class="form-group">
+            <label class="label">First Name</label>
+            <input th:disabled="${booking.id!=0}" class="form-control mb-4 col-4" type="text" th:field="*{firstName}" placeholder="First Name"/>
+                 <small style="color:red"   th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></small>
+        </div>
+        <div class="form-group">
+            <label class="label">Last Name</label>
+            <input th:disabled="${booking.id!=0}"  class="form-control mb-4 col-4" type="text" th:field="*{lastName}" placeholder="Last Name"/>
+                  <small style="color:red"  th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></small>
+        </div>
+        <div class="form-group">
+            <label class="label">Email</label>
+            <input th:disabled="${booking.id!=0}" class="form-control mb-4 col-4" type="text" th:field="*{email}" placeholder="Email"/>
+                <small style="color:red"  th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
+        </div>
+        <div class="form-group">
+            <label class="label">Age</label>
+            <input th:disabled="${booking.id!=0}" class="form-control mb-4 col-4" type="text" th:field="*{age}" placeholder="Age"/>
+                 <small style="color:red"  th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></small>
+        </div>
+        <div class="form-group">
+                <label class="label">No Of Adults</label>
+                <input th:disabled="${booking.id!=0}"  class="form-control mb-4 col-4" type="text" th:field="*{noOfAdults}" placeholder="Adults Capacity" value=""/>
+                      <small style="color:red"   th:if="${#fields.hasErrors('noOfAdults')}" th:errors="*{noOfAdults}"></small>
+
+        </div>
+        <div class="form-group">
+                <label class="label">No Of Children</label>
+                <input th:disabled="${booking.id!=0}" class="form-control mb-4 col-4" type="text" th:field="*{noOfChildren}" placeholder="Children's Capacity" value=""/>
+                      <small style="color:red"   th:if="${#fields.hasErrors('noOfChildren')}" th:errors="*{noOfChildren}"></small>
+
+        </div>
+        <div class="form-group">
+            <label class="label">Check-In Date</label>
+            <input th:disabled="${booking.id!=0}"  class="form-control mb-4 col-4" type="date" th:field="*{checkInDate}" placeholder="CheckIn" value=""/>
+                   <small style="color:red"   th:if="${#fields.hasErrors('checkInDate')}" >Please enter valid Date </small>
+        </div>
+        <div class="form-group">
+            <label class="label">Check-Out Date</label>
+            <input th:disabled="${booking.id!=0}" class="form-control mb-4 col-4" type="date" th:field="*{checkOutDate}" placeholder="CheckOut" value=""/>
+                    <small style="color:red"    th:if="${#fields.hasErrors('checkOutDate')}" >Please enter valid Date</small>
+        </div>
+        <small style="color:red"    th:if="${#fields.hasErrors('global')}" th:errors="*{global}"></small>
+        <br>
+        <div class="form-group">
+            <button th:disabled="${booking.id!=0}" type="submit" class="btn btn-success col-2">Get Available Room</button>
+            <a th:if="${booking.status=='BOOKED'} and ${booking.id!=0}" th:href="@{/bookings/cancel(bookingId=${booking.id})}" class="btn btn-warning col-1">Cancel</a>
+
+        </div>
+
+         </form>
+   <br>
+
+
+<hr>
+</div>
+</body>
+
+</html>
